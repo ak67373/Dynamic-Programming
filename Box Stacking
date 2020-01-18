@@ -1,0 +1,57 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+#define ll long long
+bool cmp(pair <ll,pair<ll,ll>> a, pair <ll,pair<ll,ll>> b)
+{
+    if((a.second.first * a.second.second) > ( b.second.first * b.second.second ))
+        return true;
+    else
+        return false;
+}
+int main()
+{
+    ll t;
+    cin>>t;
+    while(t--)
+    {
+    ll m;
+    cin>>m;
+    pair <ll,pair<ll,ll>> area[3*m];
+
+    ll length,width,height;
+
+    ll j=0;
+    for(ll i=0; i<m; i++)
+    {
+        cin>>length>>width>>height;
+
+        area[j++]=make_pair(length,make_pair(max(width,height),min(width,height)));
+        area[j++]=make_pair(width,make_pair(max(length,height),min(length,height)));
+        area[j++]=make_pair(height,make_pair(max(length,width),min(length,width)));
+    }
+    j=3*m;
+    sort(area,area+j,cmp);
+    for(ll i=0; i<j; i++)
+        cout<<area[i].first<<" "<<area[i].second.first<<" "<<area[i].second.second<<endl;
+
+    ll dp[j];
+    for(ll i=0; i<j; i++)
+        dp[i]=area[i].first;
+
+    ll ans=INT_MIN;
+    for(ll i=1; i<j; i++)
+    {
+        for(ll k=0; k<i; k++)
+        {
+            if((area[k].second.second > area[i].second.second) && (area[k].second.first > area[i].second.first )&& (dp[i]<dp[k]+area[i].first))
+                dp[i]=dp[k]+area[i].first;
+        }
+        ans=max(ans,dp[i]);
+        cout<<dp[i]<<endl;
+    }
+
+    cout<<ans<<endl;
+}
+    return 0;
+}
