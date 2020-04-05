@@ -1,0 +1,25 @@
+// variation of coin change dp
+//https://leetcode.com/explore/interview/card/top-interview-questions-hard/121/dynamic-programming/863/
+class Solution {
+public:
+    int numSquares(int n) {
+        long long  i,c=0,j;
+        vector<long long> v;
+        map<long long,long long> ma;
+        for(i=1;i<=n;i++) ma[i*i]=1,v.push_back(i*i);
+        long long dp[n+1];
+        dp[0]=0;
+        dp[1]=1;
+        for(i=2;i<=n;i++){
+            long long bo=upper_bound(v.begin(),v.end(),i)-v.begin();
+            long long min1=INT_MAX;
+            for(j=0;j<bo;j++){
+              long long ko=v[j];
+              min1=min(min1,i/ko+dp[i%ko]);
+            }
+            dp[i]=min1;
+        }
+        return dp[n];
+        
+    }
+};
