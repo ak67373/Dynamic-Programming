@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int maxProduct(vector<int>& a) {
+         int n=a.size(),i,j;
+         int l=a[0],s=a[0],ans=l;
+         for(i=1;i<n;i++){
+             if(a[i]<0){
+                 int bo=s;
+                 if(l>=0) s=a[i]*l;
+                 else s=a[i];
+                 l=a[i]*bo;
+                 l=max(a[i],l);
+                 s=min(s,a[i]);
+                 if(l==0) l=a[i];
+                 if(s==0) s=a[i];
+                 ans=max(ans,l);
+             }
+             else{
+                 l=a[i]*l;
+                 s=s*a[i];
+                 l=max(a[i],l);
+                 s=min(s,a[i]);
+                 if(l==0) l=a[i];
+                 if(s==0) s=a[i];
+                 ans=max(ans,l);
+                
+             }
+         }
+        return ans;
+        
+    }
+};
