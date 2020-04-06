@@ -1,0 +1,23 @@
+//https://leetcode.com/explore/challenge/card/30-day-leetcoding-challenge/528/week-1/3287/
+//Best dp problem in O(n) time complexity
+class Solution {
+public:
+    int maxProfit(vector<int>& v) {
+        int n=v.size(),i,j; // 7 1 5 3 6 4
+        int dp[n+1],ind=0;
+        memset(dp,0,sizeof dp);
+        dp[0]=0;
+        for(i=1;i<n;i++){            
+            while(ind<i){
+               if(v[i]<v[ind]) ind++;
+               else{
+                   dp[i]=max(dp[i],v[i]-v[ind]);
+                   ind++;
+               }
+            }
+        }
+        int ans=0;
+        for(i=0;i<n;i++) ans+=dp[i];//,cout<<dp[i]<<" ";
+        return ans;
+    }
+};
